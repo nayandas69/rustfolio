@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — {{ site.title }}{% endblock %}
+{% block description %}{{ page.description }}{% endblock %}
+
+{% block head %}
+  <link rel="canonical" href="{{ site.base_url }}{{ page.url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:url" content="{{ site.base_url }}{{ page.url }}">
+  <meta property="og:image" content="{{ site.base_url }}/og-default.svg">
+{% endblock %}
+
+{% block main %}
+<article class="article article-page theme-default width-comfortable">
+  <header class="article-header">
+    <h1 class="article-title">{{ page.title }}</h1>
+    <p class="article-lede">{{ page.description }}</p>
+  </header>
+  <div class="article-layout">
+    <div class="article-body" id="article-body">
+    {{ page.html | safe }}
+    </div>
+    {% if page.toc %}
+    <aside class="toc-wrap" aria-label="Table of contents">
+      <nav class="toc">
+        <h2 class="toc-title">On this page</h2>
+        <ol class="toc-list">
+          {% for entry in page.toc %}
+          <li class="toc-level-{{ entry.level }}"><a href="#{{ entry.id }}">{{ entry.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
+    </aside>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}

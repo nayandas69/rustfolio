@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Deployment failed — {{ site.title }}{% endblock %}
+{% block description %}The latest deployment of {{ site.title }} failed.{% endblock %}
+
+{% block main %}
+<header class="page-header not-found">
+  <p class="not-found-code">Offline</p>
+  <h1 class="page-title">Deployment failed</h1>
+  <p class="page-lede">The latest version of this site failed to build or deploy, so it is
+  temporarily unavailable. The previously published version is restored once the pipeline
+  is green again. Meanwhile, visit the <a href="/">homepage</a> or check the
+  <a href="/404.html">page you were looking for still exists</a>.</p>
+</header>
+{% endblock %}

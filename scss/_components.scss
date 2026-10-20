@@ -1,0 +1,30 @@
+// Component styles: pagination and odds-and-ends.
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-s);
+}
+
+.pagination-link {
+  font-weight: 500;
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+.pagination-link:hover {
+  text-decoration: underline;
+}
+
+.pagination-disabled {
+  flex: 1;
+}
+
+.pagination-status {
+  color: var(--ink-faint);
+}

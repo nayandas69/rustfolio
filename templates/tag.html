@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+
+{% block title %}#{{ tag }} — {{ site.title }}{% endblock %}
+{% block description %}Articles tagged #{{ tag }} on {{ site.title }}.{% endblock %}
+
+{% block main %}
+<header class="page-header">
+  <p class="breadcrumb"><a href="/tags/">Tags</a> <span aria-hidden="true">/</span> #{{ tag }}</p>
+  <h1 class="page-title">#{{ tag }}</h1>
+  <p class="page-lede">{{ count }} article{% if count != 1 %}s{% endif %} tagged #{{ tag }}.</p>
+</header>
+
+{% if posts %}
+<ul class="article-list">
+  {% for post in posts %}{{ m.post_card(post) }}{% endfor %}
+</ul>
+{% else %}
+<p class="empty-state">No articles with this tag yet.</p>
+{% endif %}
+{% endblock %}

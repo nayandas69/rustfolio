@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+
+{% block title %}Archive — {{ site.title }}{% endblock %}
+{% block description %}Every article on {{ site.title }}, newest first.{% endblock %}
+
+{% block main %}
+<header class="page-header">
+  <h1 class="page-title">Archive</h1>
+  <p class="page-lede">All {{ total }} article{% if total != 1 %}s{% endif %}, newest first.</p>
+</header>
+
+{% if years %}
+{% for group in years %}
+<section class="archive-year" aria-labelledby="archive-{{ group.year }}">
+  <h2 class="section-title" id="archive-{{ group.year }}">{{ group.year }}</h2>
+  <ul class="archive-list">
+    {% for post in group.posts %}
+    <li class="archive-item">
+      <time datetime="{{ post.date_iso }}">{{ post.date_iso }}</time>
+      <a class="archive-item-title" href="{{ post.url }}">{{ post.title }}</a>
+      <span class="archive-item-meta">{{ post.reading_time }} min read</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+{% else %}
+<p class="empty-state">Nothing has been published yet.</p>
+{% endif %}
+{% endblock %}

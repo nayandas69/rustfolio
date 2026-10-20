@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Something went wrong — {{ site.title }}{% endblock %}
+{% block description %}An unexpected error occurred on {{ site.title }}.{% endblock %}
+
+{% block main %}
+<header class="page-header not-found">
+  <p class="not-found-code">Error</p>
+  <h1 class="page-title">Something went wrong</h1>
+  <p class="page-lede">An unexpected error occurred and this page could not be shown.
+  Try again from the <a href="/">homepage</a> — or browse the
+  <a href="/blog/">blog</a> and the <a href="/archive/">archive</a>.</p>
+</header>
+{% endblock %}

@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Least privilege; this workflow needs no secrets.
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  check:
+    name: Lint, test and build the site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install pinned Rust toolchain (rust-toolchain.toml)
+        uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # @stable branch, 2024-10; installs the version pinned in rust-toolchain.toml
+
+      - name: Formatting (rustfmt)
+        run: cargo fmt --all -- --check
+
+      - name: Lint (clippy, warnings are errors)
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+      - name: Type-check
+        run: cargo check --workspace --all-targets --all-features
+
+      - name: Unit and integration tests
+        run: cargo test --workspace --all-features
+
+      - name: Compile all SCSS in strict mode
+        run: cargo run --quiet -- scss
+
+      - name: Validate configuration, frontmatter and content
+        run: cargo run --quiet -- check
+
+      - name: Production build
+        run: cargo run --quiet -- build --output dist
+
+      - name: Verify built output (HTML, internal links, assets, RSS, sitemap)
+        run: cargo run --quiet -- verify --output dist
+
+      - name: Determinism check (build twice, byte-compare)
+        run: |
+          cargo run --quiet -- build --output dist-copy
+          diff -r dist dist-copy
+          rm -rf dist-copy
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: site
+          path: dist
+          retention-days: 7
+
+

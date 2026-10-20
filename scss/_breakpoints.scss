@@ -1,0 +1,90 @@
+// Responsive breakpoints. Mobile-first; adjustments per range.
+
+@mixin below($width) {
+  @media (max-width: $width) { @content; }
+}
+
+@mixin above($width) {
+  @media (min-width: $width) { @content; }
+}
+
+// ── Article layout gets its sticky TOC on wide screens ──
+@include above(72rem) {
+  .article-layout:has(.toc-wrap) {
+    grid-template-columns: minmax(0, 1fr) 14rem;
+  }
+
+  .toc-wrap {
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+    max-height: calc(100dvh - var(--header-height) - 3rem);
+    overflow-y: auto;
+  }
+}
+
+// ── Header nav adapts to smaller screens without JS: it wraps. ──
+@include below(48rem) {
+  .header-inner {
+    flex-wrap: wrap;
+    padding-block: var(--sp-2) 0;
+    row-gap: 0;
+  }
+
+  // The nav becomes its own full-width row, scrolled edge to edge so a
+  // partially visible link signals that it scrolls.
+  .site-nav {
+    order: 3;
+    width: 100%;
+    gap: var(--sp-4);
+    padding-block: var(--sp-1);
+    margin-inline: calc(var(--content-pad) * -1);
+    padding-inline: var(--content-pad);
+    overflow-x: auto;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    border-top: 1px solid var(--line);
+
+    // Roomier links are easier to tap accurately.
+    a {
+      padding-block: var(--sp-2);
+    }
+  }
+
+  // 44px controls for touch.
+  .theme-toggle,
+  .rss-button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+@include below(40rem) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+  }
+
+  .post-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-item {
+    flex-wrap: wrap;
+  }
+
+  .archive-item-meta {
+    margin-inline-start: 0;
+    width: 100%;
+  }
+
+  .home-bio {
+    font-size: var(--fs-3);
+  }
+}
+
+// ── Very narrow phones: a slightly smaller code font buys line length. ──
+@include below(24rem) {
+  .code-block pre {
+    font-size: 0.8125rem;
+  }
+}

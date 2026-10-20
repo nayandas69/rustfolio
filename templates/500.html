@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Server error — {{ site.title }}{% endblock %}
+{% block description %}Something went wrong on the server side of {{ site.title }}.{% endblock %}
+
+{% block main %}
+<header class="page-header not-found">
+  <p class="not-found-code">500</p>
+  <h1 class="page-title">Server error</h1>
+  <p class="page-lede">Something broke on our side while serving this page. It is usually
+  temporary — try again in a moment, or head back to the
+  <a href="/">homepage</a> or the <a href="/blog/">blog index</a>.</p>
+</header>
+{% endblock %}

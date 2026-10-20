@@ -1,0 +1,43 @@
+// Design tokens — colors, spacing, type scale, radii, motion, layout.
+// All styling decisions flow through these custom properties.
+
+:root {
+  // Spacing scale (rem based, 4→64px rhythm)
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+
+  // Type scale
+  --fs-xs: 0.8125rem;
+  --fs-s: 0.875rem;
+  --fs-1: 1rem;
+  --fs-2: 1.125rem;
+  --fs-3: 1.3rem;
+  --fs-4: 1.55rem;
+  --fs-5: 2rem;
+  --fs-6: clamp(2.2rem, 1.6rem + 2.2vw, 3rem);
+
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  // Layout
+  --container: 68rem;
+  --content-pad: clamp(1rem, 4vw, 1.5rem);
+  --measure: 42rem;      // article reading width (comfortable)
+  --measure-narrow: 36rem;
+  --measure-wide: 52rem;
+  --header-height: 3.75rem;
+
+  // Radii
+  --radius-s: 3px;
+  --radius-m: 6px;
+
+  // Motion
+  --transition: 160ms ease;
+  --transition-slow: 280ms ease;
+}

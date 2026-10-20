@@ -1,0 +1,16 @@
+# cargo-audit configuration (runs in CI: `cargo audit`).
+#
+# Vulnerable and yanked crates always fail the audit and cannot be ignored
+# here. Only unmaintained-crate *warnings* may be listed, and every entry
+# must justify itself and name its revisit condition.
+
+[advisories]
+ignore = [
+  # bincode 1.x — unmaintained (RUSTSEC-2025-0141).
+  # Pulled only by syntect, whose "parsing" feature unconditionally uses
+  # bincode for the prebuilt syntax/theme dumps this site highlights with;
+  # rustfolio does not depend on bincode itself, and there is no maintained
+  # alternative syntax engine with class-based output.
+  # Revisit when syntect replaces or drops bincode.
+  "RUSTSEC-2025-0141",
+]

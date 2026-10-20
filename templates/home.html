@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+
+{% block title %}{{ site.title }} — engineering notes by {{ author.name }}{% endblock %}
+
+{% block main %}
+<header class="home-intro">
+  <p class="home-kicker">Engineering notes · <a href="/about/">{{ author.name }}</a></p>
+  <p class="home-bio">{{ author.bio }}</p>
+  <p class="home-links">
+    <a href="/blog/">All articles</a>
+    <span aria-hidden="true">·</span>
+    <a href="/rss.xml">RSS</a>
+  </p>
+</header>
+
+{% if featured_post %}
+<section class="featured" aria-labelledby="featured-heading">
+  <h2 class="section-title" id="featured-heading">Featured article</h2>
+  <article class="featured-card">
+    <h3 class="featured-title"><a href="{{ featured_post.url }}">{{ featured_post.title }}</a></h3>
+    <p class="featured-description">{{ featured_post.description }}</p>
+    <div class="article-card-meta">
+      <time datetime="{{ featured_post.date_iso }}">{{ featured_post.date_display }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{{ featured_post.reading_time }} min read</span>
+    </div>
+    {% if featured_post.tags %}
+    <ul class="tag-list">
+      {% for tag in featured_post.tags %}<li><a class="tag-chip" href="/tags/{{ tag }}/">#{{ tag }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+  </article>
+</section>
+{% endif %}
+
+{% if recent %}
+<section class="home-recent" aria-labelledby="recent-heading">
+  <div class="section-head">
+    <h2 class="section-title" id="recent-heading">Recent articles</h2>
+    <a class="section-more" href="/blog/">View all →</a>
+  </div>
+  <ul class="article-list">
+    {% for post in recent %}{{ m.post_card(post) }}{% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if topics %}
+<nav class="topics" aria-labelledby="topics-heading">
+  <h2 class="section-title" id="topics-heading">Topics</h2>
+  <ul class="topic-list">
+    {% for topic in topics %}
+    <li><a class="topic-chip" href="{{ topic.url }}">#{{ topic.tag }} <span class="topic-count">{{ topic.count }}</span></a></li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}
+
+<section class="home-about">
+  <h2 class="section-title">About the author</h2>
+  <p class="home-about-text">{{ author.bio }}</p>
+  <p><a class="more-link" href="/about/">More about me →</a></p>
+</section>
+{% endblock %}

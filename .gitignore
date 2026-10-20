@@ -1,0 +1,18 @@
+# Build output
+/dist/
+/.dist.staging-*/
+/.dist.old-*/
+
+# Rust
+/target/
+**/*.rs.bk
+
+# Environment / secrets — never commit real credentials
+.env
+.env.*
+!.env.example
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp

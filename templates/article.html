@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+
+{% block title %}{{ post.title }} — {{ site.title }}{% endblock %}
+{% block description %}{{ post.description }}{% endblock %}
+
+{% block head %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ post.title }}">
+  <meta property="og:description" content="{{ post.description }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:image" content="{{ og_image }}">
+  <meta property="article:published_time" content="{{ post.date_iso }}">
+  {% if post.updated_iso %}<meta property="article:modified_time" content="{{ post.updated_iso }}">{% endif %}
+  {% for tag in post.tags %}<meta property="article:tag" content="{{ tag }}">{% endfor %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ post.title }}">
+  <meta name="twitter:description" content="{{ post.description }}">
+  <meta name="twitter:image" content="{{ og_image }}">
+  {% if post.accent_css_url %}<link rel="stylesheet" href="{{ post.accent_css_url }}">{% endif %}
+{% endblock %}
+
+{% block main %}
+<article class="article {{ post.theme_class }} {{ post.width_class }}{% if post.wide %} article-wide{% endif %}">
+  <header class="article-header">
+    <h1 class="article-title">{{ post.title }}</h1>
+    <p class="article-lede">{{ post.description }}</p>
+    <div class="article-meta">
+      <time datetime="{{ post.date_iso }}">{{ post.date_display }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{{ post.reading_time }} min read</span>
+      <span aria-hidden="true">·</span>
+      <span>{{ author.name }}</span>
+      {% if post.updated_iso %}
+      <span class="article-updated">· updated <time datetime="{{ post.updated_iso }}">{{ post.updated_iso }}</time></span>
+      {% endif %}
+    </div>
+    {% if post.tags %}
+    <ul class="tag-list">
+      {% for tag in post.tags %}<li><a class="tag-chip" href="/tags/{{ tag }}/">#{{ tag }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+  </header>
+
+  <div class="article-layout">
+    <div class="article-body" id="article-body">
+    {{ post.html | safe }}
+    </div>
+    {% if show_toc %}
+    <aside class="toc-wrap" aria-label="Table of contents">
+      <nav class="toc" id="toc">
+        <h2 class="toc-title">On this page</h2>
+        <ol class="toc-list">
+          {% for entry in post.toc %}
+          <li class="toc-level-{{ entry.level }}"><a href="#{{ entry.id }}">{{ entry.text }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
+    </aside>
+    {% endif %}
+  </div>
+
+  <footer class="article-footer">
+    <section class="share" aria-label="Share this article">
+      <h2 class="visually-hidden">Share</h2>
+      <ul class="share-list">
+        <li><a href="https://twitter.com/intent/tweet?text={{ share_text | urlencode }}&url={{ share_url | urlencode }}">Share on X</a></li>
+        <li><a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | urlencode }}">Share on LinkedIn</a></li>
+        <li><a href="mailto:?subject={{ share_text | urlencode }}&body={{ share_url | urlencode }}">Share by email</a></li>
+      </ul>
+    </section>
+
+    <nav class="post-nav" aria-label="Adjacent articles">
+      {% if prev %}
+      <a class="post-nav-link post-nav-prev" href="{{ prev.url }}" rel="prev">
+        <span class="post-nav-label">Newer article</span>
+        <span class="post-nav-title">{{ prev.title }}</span>
+      </a>
+      {% else %}
+      <span class="post-nav-link post-nav-empty" aria-hidden="true"></span>
+      {% endif %}
+      {% if next %}
+      <a class="post-nav-link post-nav-next" href="{{ next.url }}" rel="next">
+        <span class="post-nav-label">Older article</span>
+        <span class="post-nav-title">{{ next.title }}</span>
+      </a>
+      {% else %}
+      <span class="post-nav-link post-nav-empty" aria-hidden="true"></span>
+      {% endif %}
+    </nav>
+
+    {% if related %}
+    <section class="related" aria-labelledby="related-heading">
+      <h2 class="section-title" id="related-heading">Related articles</h2>
+      <ul class="article-list">
+        {% for related_post in related %}{{ m.post_card(related_post) }}{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </footer>
+</article>
+{% endblock %}

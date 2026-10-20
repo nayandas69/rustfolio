@@ -1,0 +1,32 @@
+# rustfolio — site configuration
+#
+# This is the single, documented place to edit site-wide metadata: titles,
+# descriptions, author information and social links. Article-specific metadata
+# lives in each post's YAML frontmatter (see content/posts/).
+#
+# IMPORTANT: after your first Vercel deployment, replace `url` with the real
+# production URL. It is used for the RSS feed, the sitemap, canonical URLs and
+# Open Graph metadata.
+
+[site]
+url = "https://rustfolio.vercel.app" # TODO: replace with your production URL
+title = "rustfolio"
+description = "An engineering blog about Rust, systems programming and building fast, reliable software."
+locale = "en"
+posts_per_page = 8
+
+[author]
+name = "nayandas69"
+# Short bio shown on the homepage and the about page.
+bio = """
+Software engineer writing about Rust, systems programming and the craft of
+building small, fast, dependable tools for the web.
+"""
+
+[social]
+github = "https://github.com/nayandas69"
+# Optional — remove or leave empty to hide a link.
+twitter = ""
+linkedin = ""
+mastodon = ""
+rss = "/rss.xml"

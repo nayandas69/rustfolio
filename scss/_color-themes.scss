@@ -1,0 +1,199 @@
+// Color themes: light (default), dark, and the automatic dark preference.
+// Article themes (paper / dark / minimal) adjust the reading surface only.
+
+:root {
+  color-scheme: light dark;
+
+  // Light — warm off-white
+  --bg: #faf7f2;
+  --bg-raised: #ffffff;
+  --bg-inset: #f2ede4;
+  --bg-code: #f4f0e8;
+  --ink: #26211c;
+  --ink-soft: #5c554c;
+  --ink-faint: #8a8276;
+  --accent: #e56a35;         // decorative accent (borders, marks)
+  --accent-strong: #a63d1b;  // accessible accent text on light backgrounds
+  --accent-soft: rgba(229, 106, 53, 0.12);
+  --line: #e4ddd0;
+  --line-strong: #cfc5b4;
+  --focus-ring: #a63d1b;
+  --selection: rgba(229, 106, 53, 0.25);
+}
+
+// Explicit dark mode (toggle)…
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #161311;
+  --bg-raised: #211d19;
+  --bg-inset: #1d1916;
+  --bg-code: #1b1714;
+  --ink: #ece5db;
+  --ink-soft: #b5ab9c;
+  --ink-faint: #7d7568;
+  --accent: #f0793f;
+  --accent-strong: #f0975f;
+  --accent-soft: rgba(240, 121, 63, 0.16);
+  --line: #2c2722;
+  --line-strong: #453d34;
+  --focus-ring: #f0975f;
+  --selection: rgba(240, 121, 63, 0.3);
+}
+
+// …and the system preference, unless the visitor chose explicitly.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --bg: #161311;
+    --bg-raised: #211d19;
+    --bg-inset: #1d1916;
+    --bg-code: #1b1714;
+    --ink: #ece5db;
+    --ink-soft: #b5ab9c;
+    --ink-faint: #7d7568;
+    --accent: #f0793f;
+    --accent-strong: #f0975f;
+    --accent-soft: rgba(240, 121, 63, 0.16);
+    --line: #2c2722;
+    --line-strong: #453d34;
+    --focus-ring: #f0975f;
+    --selection: rgba(240, 121, 63, 0.3);
+  }
+}
+
+// ── Per-article themes: adjust the reading surface, not the whole page ──
+
+.theme-paper {
+  --article-bg: #fdfbf7;
+  --article-border: 1px solid var(--line);
+  --article-radius: var(--radius-m);
+  --article-shadow: 0 1px 3px rgba(38, 33, 28, 0.06);
+  --article-pad: clamp(1.25rem, 5vw, 3rem);
+
+  // The paper surface stays light even when the page is dark, so it must
+  // carry its own light-mode ink tokens — otherwise dark mode flips the
+  // page tokens to light ink and the article renders light-on-light.
+  --bg-raised: #ffffff;
+  --bg-inset: #f2ede4;
+  --bg-code: #f4f0e8;
+  --ink: #26211c;
+  --ink-soft: #5c554c;
+  --ink-faint: #8a8276;
+  --accent: #e56a35;
+  --accent-strong: #a63d1b;
+  --accent-soft: rgba(229, 106, 53, 0.12);
+  --line: #e4ddd0;
+  --line-strong: #cfc5b4;
+  --focus-ring: #a63d1b;
+  --selection: rgba(229, 106, 53, 0.25);
+  --tok-keyword: #a63d1b;
+  --tok-string: #3f6b32;
+  --tok-comment: #8a8276;
+  --tok-number: #7a4f9e;
+  --tok-function: #8a5b12;
+  --tok-type: #2f6b7a;
+  --tok-constant: #7a4f9e;
+  --tok-error: #b3261e;
+  color: var(--ink);
+}
+
+.theme-dark {
+  --article-bg: #14100e;
+  --article-border: 1px solid #2c2722;
+  --article-radius: var(--radius-m);
+  --article-shadow: none;
+  --article-pad: clamp(1.25rem, 5vw, 3rem);
+
+  // Mirror image of theme-paper: the dark surface keeps dark-mode ink
+  // tokens even when the page itself is light.
+  --bg-raised: #211d19;
+  --bg-inset: #1d1916;
+  --bg-code: #1b1714;
+  --ink: #ece5db;
+  --ink-soft: #b5ab9c;
+  --ink-faint: #7d7568;
+  --accent: #f0793f;
+  --accent-strong: #f0975f;
+  --accent-soft: rgba(240, 121, 63, 0.16);
+  --line: #2c2722;
+  --line-strong: #453d34;
+  --focus-ring: #f0975f;
+  --selection: rgba(240, 121, 63, 0.3);
+  --tok-keyword: #f0975f;
+  --tok-string: #a3c585;
+  --tok-comment: #7d7568;
+  --tok-number: #c9a6e0;
+  --tok-function: #e0b45e;
+  --tok-type: #8ec9d9;
+  --tok-constant: #c9a6e0;
+  --tok-error: #ef9a92;
+  color: var(--ink);
+}
+
+.theme-minimal,
+.theme-default {
+  --article-bg: transparent;
+  --article-border: none;
+  --article-radius: 0;
+  --article-shadow: none;
+  --article-pad: 0;
+}
+
+// ── Article themes follow the site theme ──
+// A paper card is a light surface and a dark card a dark surface. When the
+// site theme disagrees with the article theme, the fixed surface is
+// dropped and every token inherits the page's value, so posts always
+// render dark in dark mode and light in light mode. `inherit` resolves to
+// the ancestor's (i.e. :root's) token, since no element between the
+// article and the root redefines these.
+@mixin follow-page-tokens {
+  --article-bg: transparent;
+  --article-border: none;
+  --article-radius: 0;
+  --article-shadow: none;
+  --article-pad: 0;
+  --bg-raised: inherit;
+  --bg-inset: inherit;
+  --bg-code: inherit;
+  --ink: inherit;
+  --ink-soft: inherit;
+  --ink-faint: inherit;
+  --accent: inherit;
+  --accent-strong: inherit;
+  --accent-soft: inherit;
+  --line: inherit;
+  --line-strong: inherit;
+  --focus-ring: inherit;
+  --selection: inherit;
+  --tok-keyword: inherit;
+  --tok-string: inherit;
+  --tok-comment: inherit;
+  --tok-number: inherit;
+  --tok-function: inherit;
+  --tok-type: inherit;
+  --tok-constant: inherit;
+  --tok-error: inherit;
+}
+
+// Site in dark mode: a paper article follows the dark theme.
+:root[data-theme="dark"] .theme-paper {
+  @include follow-page-tokens;
+}
+
+// Site in light mode: a dark article follows the light theme.
+:root[data-theme="light"] .theme-dark {
+  @include follow-page-tokens;
+}
+
+// Same follows for the system preference when the visitor chose nothing.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .theme-paper {
+    @include follow-page-tokens;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .theme-dark {
+    @include follow-page-tokens;
+  }
+}

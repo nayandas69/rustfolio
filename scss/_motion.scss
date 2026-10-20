@@ -1,0 +1,26 @@
+// Motion: restrained, purposeful, and respectful of reduced-motion.
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Link underline transitions stay subtle even when motion is allowed.
+a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--transition);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}

@@ -1,0 +1,16 @@
+{% macro post_card(post) %}
+<li class="article-card{% if post.featured %} article-card-featured{% endif %}">
+  <h3 class="article-card-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+  <p class="article-card-description">{{ post.description }}</p>
+  <div class="article-card-meta">
+    <time datetime="{{ post.date_iso }}">{{ post.date_display }}</time>
+    <span aria-hidden="true">·</span>
+    <span>{{ post.reading_time }} min read</span>
+  </div>
+  {% if post.tags %}
+  <ul class="tag-list">
+    {% for tag in post.tags %}<li><a class="tag-chip" href="/tags/{{ tag }}/">#{{ tag }}</a></li>{% endfor %}
+  </ul>
+  {% endif %}
+</li>
+{% endmacro %}

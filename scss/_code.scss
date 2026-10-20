@@ -1,0 +1,147 @@
+// Code blocks and syntax highlighting (syntect class-based tokens).
+
+.code-block {
+  position: relative;
+  margin: var(--sp-5) 0;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--bg-code);
+  border: 1px solid var(--line);
+  border-radius: 0 0 var(--radius-m) var(--radius-m);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+
+.code-block code {
+  font-family: inherit;
+  background: transparent;
+  padding: 0;
+  border: 0;
+}
+
+// Language badge — far left of the code block's top edge
+.code-block[data-lang]:not([data-lang=""])::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.15em 0.6em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--ink-faint);
+  border-inline-end: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: var(--radius-m) 0 var(--radius-m) 0;
+  background: var(--bg-inset);
+}
+
+// Copy button (injected by progressive enhancement) — far right,
+// on the same top line as the language badge
+.copy-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.2em 0.7em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--ink-soft);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition), color var(--transition);
+}
+
+.code-block:hover .copy-button,
+.copy-button:focus-visible,
+.code-block[data-lang]:not([data-lang=""]) .copy-button {
+  opacity: 1;
+}
+
+.copy-button:hover {
+  color: var(--accent-strong);
+  border-color: var(--accent);
+}
+
+// Inline code
+.article-body :not(pre) > code,
+.page-lede code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-inset);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line);
+}
+
+// ── Token colors (syntect classes). Restrained, themed via tokens. ──
+:root {
+  --tok-keyword: #a63d1b;
+  --tok-string: #3f6b32;
+  --tok-comment: #8a8276;
+  --tok-number: #7a4f9e;
+  --tok-function: #8a5b12;
+  --tok-type: #2f6b7a;
+  --tok-constant: #7a4f9e;
+  --tok-error: #b3261e;
+}
+
+:root[data-theme="dark"] {
+  --tok-keyword: #f0975f;
+  --tok-string: #a3c585;
+  --tok-comment: #7d7568;
+  --tok-number: #c9a6e0;
+  --tok-function: #e0b45e;
+  --tok-type: #8ec9d9;
+  --tok-constant: #c9a6e0;
+  --tok-error: #ef9a92;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --tok-keyword: #f0975f;
+    --tok-string: #a3c585;
+    --tok-comment: #7d7568;
+    --tok-number: #c9a6e0;
+    --tok-function: #e0b45e;
+    --tok-type: #8ec9d9;
+    --tok-constant: #c9a6e0;
+    --tok-error: #ef9a92;
+  }
+}
+
+.tok-keyword { color: var(--tok-keyword); }
+.tok-string { color: var(--tok-string); }
+.tok-comment { color: var(--tok-comment); font-style: italic; }
+.tok-number { color: var(--tok-number); }
+.tok-function { color: var(--tok-function); }
+.tok-type { color: var(--tok-type); }
+.tok-constant { color: var(--tok-constant); }
+
+// syntect emits TextMate scope atoms as space-separated classes,
+// e.g. <span class="keyword operator assignment">. Selectors below
+// match the leading atom of each scope.
+.source { color: inherit; }
+.code-block .keyword,
+.code-block .storage,
+.code-block .keyword.control { color: var(--tok-keyword); font-weight: 500; }
+.code-block .string { color: var(--tok-string); }
+.code-block .comment { color: var(--tok-comment); font-style: italic; }
+.code-block .constant,
+.code-block .numeric { color: var(--tok-number); }
+.code-block .function { color: var(--tok-function); }
+.code-block .entity { color: var(--tok-type); }
+.code-block .support { color: var(--tok-function); }
+.code-block .variable { color: var(--ink); }
+.code-block .punctuation { color: var(--ink-soft); }
+.code-block .meta,
+.code-block .preproc { color: var(--tok-function); }
+.code-block .invalid { color: var(--tok-error); }

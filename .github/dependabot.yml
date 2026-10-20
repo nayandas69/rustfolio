@@ -1,0 +1,17 @@
+version: 2
+
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Keep Cargo.lock fresh; review and commit the diff.
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Action refs are pinned to full commit SHAs; Dependabot opens PRs
+    # that re-pin to the latest release tags.
+    open-pull-requests-limit: 5

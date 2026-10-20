@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="rustfolio">
+  <rect width="1200" height="630" fill="#faf7f2"/>
+  <rect x="0" y="0" width="14" height="630" fill="#e56a35"/>
+  <text x="90" y="300" font-family="system-ui, sans-serif" font-size="110" font-weight="700" fill="#26211c" letter-spacing="-4">rustfolio</text>
+  <text x="94" y="370" font-family="system-ui, sans-serif" font-size="40" fill="#5c554c">Engineering notes on Rust &amp; systems programming</text>
+  <circle cx="1090" cy="120" r="26" fill="#e56a35"/>
+</svg>

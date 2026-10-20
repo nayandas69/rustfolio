@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+
+{% block title %}Blog — {{ site.title }}{% endblock %}
+{% block description %}All articles from {{ site.title }}: Rust, systems programming and software engineering.{% endblock %}
+
+{% block main %}
+<header class="page-header">
+  <h1 class="page-title">Blog</h1>
+</header>
+
+<div class="search" role="search">
+  <label class="search-label" for="search-input">Search articles</label>
+  <input id="search-input" class="search-input" type="search" placeholder="Search titles, tags and text…"
+         autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false"
+         aria-controls="search-results" aria-autocomplete="list" data-search-input>
+  <p class="search-status" data-search-status aria-live="polite"></p>
+  <ul id="search-results" class="search-results" role="listbox" aria-label="Search results" data-search-results hidden></ul>
+</div>
+
+<nav class="tag-filter" aria-label="Filter by topic">
+  <h2 class="visually-hidden">Topics</h2>
+  <a class="tag-chip tag-chip-all" href="/blog/">All</a>
+  {% for topic in all_tags %}
+  <a class="tag-chip" href="{{ topic.url }}">#{{ topic.tag }}</a>
+  {% endfor %}
+</nav>
+
+{% if posts %}
+<ul class="article-list">
+  {% for post in posts %}{{ m.post_card(post) }}{% endfor %}
+</ul>
+{% else %}
+<p class="empty-state">No articles published yet — check back soon.</p>
+{% endif %}
+
+{% if total_pages > 1 %}
+<nav class="pagination" aria-label="Blog pages">
+  {% if prev_url %}<a class="pagination-link" href="{{ prev_url }}" rel="prev">← Newer articles</a>{% else %}<span class="pagination-link pagination-disabled" aria-hidden="true"></span>{% endif %}
+  <span class="pagination-status">Page {{ page }} of {{ total_pages }}</span>
+  {% if next_url %}<a class="pagination-link" href="{{ next_url }}" rel="next">Older articles →</a>{% else %}<span class="pagination-link pagination-disabled" aria-hidden="true"></span>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}<script src="/assets/{{ search_js_name }}" defer></script>{% endblock %}

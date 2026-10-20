@@ -1,0 +1,37 @@
+[package]
+name = "rustfolio"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "A Rust-powered static site generator for the rustfolio engineering blog"
+license = "MIT"
+repository = "https://github.com/nayandas69/rustfolio"
+publish = false
+
+[[bin]]
+name = "rustfolio"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+chrono = "0.4"
+clap = { version = "4", features = ["derive"] }
+grass = "0.13"
+minijinja = { version = "3", features = ["urlencode", "serde"] }
+pulldown-cmark = { version = "0.13", default-features = false, features = ["html"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Frontmatter YAML is parsed by the strict parser in src/frontmatter.rs —
+# no YAML crate needed. The site config uses `toml` below.
+# `yaml-load` stays off: it pulls the unmaintained `yaml-rust`
+# (RUSTSEC-2024-0320). Highlighting loads syntect's prebuilt binary
+# syntax/theme dumps instead, which is all it needs.
+syntect = { version = "5", default-features = false, features = ["default-syntaxes", "default-themes", "html", "regex-fancy"] }
+thiserror = "2"
+toml = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+walkdir = "2"
+
+[dev-dependencies]
+tempfile = "3"

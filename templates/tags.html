@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Tags — {{ site.title }}{% endblock %}
+{% block description %}All topics covered on {{ site.title }}.{% endblock %}
+
+{% block main %}
+<header class="page-header">
+  <h1 class="page-title">Tags</h1>
+  <p class="page-lede">Browse articles by topic.</p>
+</header>
+
+{% if tags %}
+<ul class="topic-index">
+  {% for tag in tags %}
+  <li>
+    <a class="topic-chip" href="{{ tag.url }}">
+      #{{ tag.tag }} <span class="topic-count">{{ tag.count }} article{% if tag.count != 1 %}s{% endif %}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty-state">No tags yet — publish an article first.</p>
+{% endif %}
+{% endblock %}

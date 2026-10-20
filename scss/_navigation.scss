@@ -1,0 +1,114 @@
+// Navigation: primary nav, theme toggle, breadcrumbs, TOC.
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  font-size: var(--fs-s);
+  font-weight: 500;
+
+  a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: var(--sp-1) 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  a:hover {
+    color: var(--ink);
+  }
+
+  a[aria-current="page"] {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+}
+
+.theme-toggle,
+.rss-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--bg-raised);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.theme-toggle:hover,
+.rss-button:hover {
+  color: var(--accent-strong);
+  border-color: var(--line-strong);
+}
+
+// The moon is the affordance in light mode; the sun in dark mode.
+.icon-moon { display: block; }
+.icon-sun { display: none; }
+
+:root[data-theme="dark"] {
+  .icon-moon { display: none; }
+  .icon-sun { display: block; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    .icon-moon { display: none; }
+    .icon-sun { display: block; }
+  }
+}
+
+// ── Breadcrumbs ──
+.breadcrumb {
+  font-size: var(--fs-s);
+  color: var(--ink-faint);
+  margin: 0 0 var(--sp-2);
+}
+
+// ── Table of contents (sticky on wide layouts) ──
+.toc-wrap {
+  font-size: var(--fs-s);
+}
+
+.toc-title {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  margin: 0 0 var(--sp-2);
+}
+
+.toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-1);
+  border-inline-start: 2px solid var(--line);
+}
+
+.toc-list a {
+  display: inline-block;
+  padding-block: 0.1em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.toc-list a:hover {
+  color: var(--accent-strong);
+}
+
+.toc-list a[aria-current="true"] {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.toc-level-3 {
+  padding-inline-start: var(--sp-3);
+}

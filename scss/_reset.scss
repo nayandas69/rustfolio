@@ -1,0 +1,62 @@
+// Reset and base styles.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--fs-1);
+  line-height: 1.65;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+img {
+  border-radius: var(--radius-s);
+}
+
+a {
+  color: var(--accent-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+::selection {
+  background: var(--selection);
+}
+
+ul,
+ol {
+  padding-inline-start: 1.4em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: var(--sp-6) 0;
+}

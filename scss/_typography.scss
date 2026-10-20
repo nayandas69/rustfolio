@@ -1,0 +1,60 @@
+// Typography — headings, body text, article reading styles.
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-ui);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0 0 var(--sp-3);
+  color: var(--ink);
+}
+
+h2 { font-size: var(--fs-4); }
+h3 { font-size: var(--fs-3); }
+h4 { font-size: var(--fs-2); }
+h5, h6 { font-size: var(--fs-1); }
+
+p {
+  margin: 0 0 var(--sp-4);
+}
+
+.section-title {
+  font-size: var(--fs-s);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  margin: 0 0 var(--sp-4);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-title {
+  font-size: var(--fs-6);
+  margin-bottom: var(--sp-3);
+}
+
+.page-lede {
+  font-size: var(--fs-2);
+  color: var(--ink-soft);
+  max-width: var(--measure);
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}

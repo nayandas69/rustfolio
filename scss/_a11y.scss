@@ -1,0 +1,32 @@
+// Accessibility: skip link, focus visibility, reduced-motion-safe helpers.
+
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--bg-raised);
+  color: var(--ink);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-s);
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--transition);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+// Visible, consistent focus indicator everywhere.
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.search-input:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
